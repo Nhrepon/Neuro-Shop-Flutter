@@ -30,37 +30,41 @@ class Profile extends StatelessWidget {
         backgroundColor: Colors.yellow,
         actions: [
           IconButton(onPressed: ()=>{}, icon: Icon(CupertinoIcons.add)),
-          IconButton(onPressed: ()=>{}, icon: Icon(CupertinoIcons.settings)),
-          IconButton(onPressed: ()=>{}, icon: Icon(CupertinoIcons.dial)),
+          IconButton(onPressed: ()=>{}, icon: Icon(CupertinoIcons.settings_solid)),
+          IconButton(onPressed: ()=>{}, icon: Icon(CupertinoIcons.phone)),
         ],
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset('images/img1.jpg', width: 150,),
+            CircleAvatar(
+              backgroundColor: Colors.black26,
+              child: Image.asset('images/ice-cream.png', width: 100,),
+              radius: 80,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text('Ice-creame is very delicious right?'),
+            Text('Ice-creame is very delicious right?',
+              style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold, height: 4)),
+
+
+
+            CircleAvatar(
+              backgroundColor: Colors.black26,
+              child: Image.asset('images/code.png', width: 100,),
+              radius: 80,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset('images/img1.jpg', width: 150,),
+            Text('Programming is not boring if you love it.',
+                style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold, height: 4)),
+
+
+
+            CircleAvatar(
+              backgroundColor: Colors.black26,
+              child: Image.asset('images/blood.png', width: 100,),
+              radius: 80,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text("Programming is not boring if you love it."),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Image.asset('images/img1.jpg', width: 150,),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text('Ice-creame is very delicious right?'),
-            ),
+            Text('If you submit code directly copy from chatgpt then mark will be 0',
+                style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
 
 
           ],
