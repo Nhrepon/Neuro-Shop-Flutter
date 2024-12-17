@@ -1,8 +1,11 @@
 
 import 'package:assignment/addQoute.dart';
+import 'package:assignment/model/quote.dart';
 import 'package:assignment/quoteList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'updateQoute.dart';
 
 void main(){
   runApp(const Assignment());
@@ -17,10 +20,19 @@ class Assignment extends StatelessWidget {
       title: "Flutter CRUD application",
       home: Home(),
       initialRoute: '/',
-      routes: {
-        Addqoute.name: (context)=> const Addqoute(),
-
+      onGenerateRoute: (RouteSettings setting){
+        late Widget widget;
+        if(setting.name == Addqoute.name){
+          widget = const Addqoute();
+        }else if(setting.name == Updateqoute.name){
+          final Quote quote = setting.arguments as Quote;
+          widget = Updateqoute(quote: quote);
+        }
+        return MaterialPageRoute(builder: (context){
+          return widget;
+        },);
       },
+
     );
   }
 }
@@ -44,7 +56,7 @@ class Home extends StatelessWidget {
         ],
       ),
 
-      body: Quotelist(),
+      body: const Quotelist(),
 
 
     );

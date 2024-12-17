@@ -1,17 +1,19 @@
 import 'dart:convert';
 
+import 'package:assignment/model/quote.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
-class Addqoute extends StatefulWidget {
-  const Addqoute({super.key});
-  static const String name = "add-new";
+class Updateqoute extends StatefulWidget {
+  const Updateqoute({super.key, required this.quote});
+  static const String name = "update";
+  final Quote quote;
 
   @override
-  State<Addqoute> createState() => _AddqouteState();
+  State<Updateqoute> createState() => _AddqouteState();
 }
 
-class _AddqouteState extends State<Addqoute> {
+class _AddqouteState extends State<Updateqoute> {
   final TextEditingController title = TextEditingController();
   final TextEditingController author = TextEditingController();
   final TextEditingController img = TextEditingController();
@@ -19,10 +21,19 @@ class _AddqouteState extends State<Addqoute> {
   bool progressbar = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    title.text=widget.quote.title ?? "";
+    author.text=widget.quote.subtitle ?? "";
+    img.text=widget.quote.image ?? "";
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Addqoute.name),
+        title: Text(Updateqoute.name),
         backgroundColor: Colors.yellow,
       ),
       body: SingleChildScrollView(
@@ -149,7 +160,7 @@ class _AddqouteState extends State<Addqoute> {
                   ),
                     onPressed: (){
                     if(formKey.currentState!.validate()){
-                      addNewQuote();
+                      updateQuote();
                     }
                     },
                     child: const Text("Add Qoute", style: TextStyle(
@@ -166,10 +177,10 @@ class _AddqouteState extends State<Addqoute> {
 
 
 
-  Future<void> addNewQuote()async{
+  Future<void> updateQuote()async{
     progressbar = true;
     setState(() {});
-    Uri uri = Uri.parse("https://crud.teamrabbil.com/api/v1/CreateProduct");
+    Uri uri = Uri.parse("https://crud.teamrabbil.com/api/v1/UpdateProduct/${widget.quote.id}");
     Map<String, dynamic> reqBody = {
       "ProductName": title.text.trim(),
       "ProductCode": author.text.trim(),
@@ -207,16 +218,3 @@ class _AddqouteState extends State<Addqoute> {
 
 }
 
-// extension WidgetExtension on Widget {
-//   Widget paddingAll(double value) => Padding(padding: EdgeInsets.all(value), child: this);
-//
-//   Widget padding(EdgeInsets padding) => Padding(padding: padding, child: this);
-// }
-//
-// extension ColumnExtension on Column {
-//   Column childrenPadding(EdgeInsets padding) {
-//     return Column(
-//       children: children.map((e) => e.padding(padding)).toList(),
-//     );
-//   }
-// }
