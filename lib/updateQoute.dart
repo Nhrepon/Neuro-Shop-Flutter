@@ -163,7 +163,7 @@ class _AddqouteState extends State<Updateqoute> {
                       updateQuote();
                     }
                     },
-                    child: const Text("Add Qoute", style: TextStyle(
+                    child: const Text("Update Qoute", style: TextStyle(
                       fontSize: 18,
 
                     ),)

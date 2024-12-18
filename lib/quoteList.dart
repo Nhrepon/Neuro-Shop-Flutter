@@ -16,6 +16,9 @@ class Quotelist extends StatefulWidget {
 class _QuotelistState extends State<Quotelist> {
   List<Quote> quoteList = [];
   bool progressbar = false;
+  void refreshQuote(){
+    setState(() async {await getQuoteList();});
+  }
 
   @override
   void initState() {
@@ -40,6 +43,7 @@ class _QuotelistState extends State<Quotelist> {
               itemBuilder: (context, index){
             return QuoteItem(
               quote: quoteList[index],
+              onDelete: refreshQuote,
             );
           }),
         ),
@@ -72,6 +76,12 @@ class _QuotelistState extends State<Quotelist> {
     progressbar = false;
 
   }
+
+
+
+
+
+
 }
 
 
