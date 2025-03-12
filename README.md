@@ -1,4 +1,5 @@
-# Flutter CRUD application
+# Neuro Shop
 
-A new Flutter CRUD application.
+A new Flutter ecommerce project.
+
 
