@@ -1,7 +1,7 @@
 {
-    "version": "Version [bn]",
-    "welcomeBack": "Welcome Back [bn]",
-    "enterYourEmailAndPassword": "Enter your email and password [bn]",
+    "version": "ভার্সন: ১.০.০",
+    "welcomeBack": "স্বাগতম",
+    "enterYourEmailAndPassword": "আপনার ইমেইল এবং পাসওয়ার্ড ‍দিন",
     "email": "ইমেইল",
     "password": "পাসওয়ার্ড",
     "signIn": "সাইন ইন"

@@ -15,12 +15,29 @@ class NeuroShop extends StatefulWidget {
 class _NeuroShopState extends State<NeuroShop> {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      initialRoute: SignInScreen.name,
+      initialRoute: '/',
       onGenerateRoute: AppRoutes.onGenerateRoute,
       theme: ThemeData(
         colorSchemeSeed: AppColors.themeColor,
         scaffoldBackgroundColor: Colors.white,
+        textTheme: TextTheme(titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.themeColor)),
+          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.themeColor)),
+          errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+          hintStyle: TextStyle(fontWeight: FontWeight.w400,color: Colors.grey),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            fixedSize: Size.fromWidth(double.maxFinite),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            foregroundColor: Colors.white,
+            backgroundColor: AppColors.themeColor,
+          )
+        )
       ),
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -28,12 +45,12 @@ class _NeuroShopState extends State<NeuroShop> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      locale: Locale('en'),
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'), // English
         Locale('bn'), // Bangla
-      ],
-
+      ],      
+      locale: const Locale('en'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
