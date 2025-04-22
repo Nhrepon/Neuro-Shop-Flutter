@@ -5,5 +5,16 @@
     "email": "Email",
     "password": "Password",
     "signIn": "Sign In",
-    "login": "Login"
+    "login": "Login",
+    "createAccount": "Create account",
+    "getStarted": "Get started with your details",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "address": "Address",
+    "signUp": "Sign up",
+    "verify": "Verify",
+    "enterYourOtp": "Enter your otp code",
+    "otpSend": "A 6 digit otp send to your email address",
+    "seeAll": "See all"
 }

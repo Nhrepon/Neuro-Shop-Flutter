@@ -4,5 +4,7 @@
     "enterYourEmailAndPassword": "আপনার ইমেইল এবং পাসওয়ার্ড ‍দিন",
     "email": "ইমেইল",
     "password": "পাসওয়ার্ড",
-    "signIn": "সাইন ইন"
+    "signIn": "সাইন ইন",
+    "createAccount": "Create account",
+    "getStarted": "Get started with your details"
 }
