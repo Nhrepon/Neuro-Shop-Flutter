@@ -16,5 +16,9 @@
     "verify": "Verify",
     "enterYourOtp": "Enter your otp code",
     "otpSend": "A 6 digit otp send to your email address",
-    "seeAll": "See all"
+    "categories": "Categories",
+    "popular": "Popular",
+    "seeAll": "See all",
+    "newProduct": "New Product",
+    "special": "Special"
 }

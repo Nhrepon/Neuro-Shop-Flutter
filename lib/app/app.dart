@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/app/app_routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neuro_shop/app/controller_binder.dart';
 import 'package:neuro_shop/features/auth/ui/screens/sign_in_screen.dart';
 
 class NeuroShop extends StatefulWidget {
@@ -16,10 +18,11 @@ class _NeuroShopState extends State<NeuroShop> {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return GetMaterialApp(
       initialRoute: '/',
       onGenerateRoute: AppRoutes.onGenerateRoute,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(color: Colors.white),
         colorSchemeSeed: AppColors.themeColor,
         scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
@@ -51,6 +54,7 @@ class _NeuroShopState extends State<NeuroShop> {
       ],      
       locale: const Locale('en'),
       debugShowCheckedModeBanner: false,
+      initialBinding: ControllerBinder(),
     );
   }
 }

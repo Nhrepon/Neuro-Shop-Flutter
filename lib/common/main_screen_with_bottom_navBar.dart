@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:neuro_shop/controller/home_layout_controller.dart';
+import 'package:neuro_shop/features/auth/ui/screens/category_list_screen.dart';
 import 'package:neuro_shop/home/home_screen.dart';
 
 class MainScreenWithBottomNavbar extends StatefulWidget {
@@ -9,10 +13,11 @@ class MainScreenWithBottomNavbar extends StatefulWidget {
 }
 
 class _MainScreenWithBottomNavbarState extends State<MainScreenWithBottomNavbar> {
-  int _selectedIndex = 0;
+  //int _selectedIndex = 0;.
+
   final List<Widget> _screen = [
     HomeScreen(),
-    HomeScreen(),
+    CategoryListScreen(),
     HomeScreen(),
     HomeScreen()
   ];
@@ -20,19 +25,24 @@ class _MainScreenWithBottomNavbarState extends State<MainScreenWithBottomNavbar>
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(),
-      body: _screen[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: (int index){
-            _selectedIndex = index;
-          setState(() {});
-          },
-          destinations: [
-            NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-            NavigationDestination(icon: Icon(Icons.category), label: "Category"),
-            NavigationDestination(icon: Icon(Icons.shopping_cart), label: "Cart"),
-            NavigationDestination(icon: Icon(Icons.favorite_outline), label: "Wish list"),
-      ]),
+      body: GetBuilder<HomeLayoutController>(
+        builder: (controller) {
+          return _screen[controller.selectedIndex];
+        }
+      ),
+      bottomNavigationBar: GetBuilder<HomeLayoutController>(
+        builder: (controller) {
+          return NavigationBar(
+              selectedIndex: controller.selectedIndex,
+              onDestinationSelected: controller.changeIndex,
+              destinations: [
+                NavigationDestination(icon: Icon(Icons.home), label: "Home"),
+                NavigationDestination(icon: Icon(Icons.category), label: "Category"),
+                NavigationDestination(icon: Icon(Icons.shopping_cart), label: "Cart"),
+                NavigationDestination(icon: Icon(Icons.favorite_outline), label: "Wish list"),
+          ]);
+        }
+      ),
     );
   }
 }
