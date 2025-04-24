@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:neuro_shop/activity/cart_list_screen.dart';
+import 'package:neuro_shop/activity/product_details_screen.dart';
+import 'package:neuro_shop/activity/product_list_screen.dart';
+import 'package:neuro_shop/activity/wish_list_screen.dart';
 import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
-import 'package:neuro_shop/features/auth/ui/screens/sign_up_screen.dart';
-import 'package:neuro_shop/features/auth/ui/screens/splash_screen.dart';
-import 'package:neuro_shop/features/auth/ui/screens/sign_in_screen.dart';
-import 'package:neuro_shop/features/auth/ui/screens/verify_otp_screen.dart';
+
+import '../activity/sign_in_screen.dart';
+import '../activity/sign_up_screen.dart';
+import '../activity/splash_screen.dart';
+import '../activity/verify_otp_screen.dart';
 
 class AppRoutes{
   static Route<dynamic> onGenerateRoute(RouteSettings settings){
@@ -18,6 +23,15 @@ class AppRoutes{
       route = const VerifyOtpScreen();
     }else if(settings.name == MainScreenWithBottomNavbar.name){
       route = const MainScreenWithBottomNavbar();
+    }else if(settings.name == ProductListScreen.name){
+      final String category = settings.arguments as String;
+      route = ProductListScreen(category: category,);
+    }else if(settings.name == ProductDetailsScreen.name){
+      route = ProductDetailsScreen();
+    }else if(settings.name == WishListScreen.name){
+      route = const WishListScreen();
+    }else if(settings.name == CartListScreen.name){
+      route = const CartListScreen();
     }
 
 

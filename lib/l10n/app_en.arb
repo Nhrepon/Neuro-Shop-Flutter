@@ -20,5 +20,8 @@
     "popular": "Popular",
     "seeAll": "See all",
     "newProduct": "New Product",
-    "special": "Special"
+    "special": "Special",
+    "wishList": "Wish list",
+    "cartList": "Cart list",
+    "productDetails": "Product details"
 }

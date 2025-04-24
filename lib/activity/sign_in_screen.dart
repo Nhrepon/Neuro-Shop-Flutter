@@ -2,11 +2,11 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neuro_shop/activity/sign_up_screen.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
-import 'package:neuro_shop/features/auth/ui/screens/sign_up_screen.dart';
-import 'package:neuro_shop/features/auth/ui/widgets/SnackBarMessage.dart';
+import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 import '../../../../app/app_colors.dart';
-import '../widgets/app_logo.dart';
+import '../../../../widgets/app_logo.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

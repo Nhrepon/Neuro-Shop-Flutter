@@ -1,13 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:neuro_shop/activity/sign_in_screen.dart';
+import 'package:neuro_shop/activity/verify_otp_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neuro_shop/features/auth/ui/screens/sign_in_screen.dart';
-import 'package:neuro_shop/features/auth/ui/screens/verify_otp_screen.dart';
 
-import '../widgets/SnackBarMessage.dart';
-import '../widgets/app_logo.dart';
+import '../../../../widgets/SnackBarMessage.dart';
+import '../../../../widgets/app_logo.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

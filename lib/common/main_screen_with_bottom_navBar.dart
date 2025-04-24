@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:neuro_shop/activity/cart_list_screen.dart';
+import 'package:neuro_shop/activity/wish_list_screen.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
-import 'package:neuro_shop/features/auth/ui/screens/category_list_screen.dart';
+import 'package:neuro_shop/activity/category_list_screen.dart';
 import 'package:neuro_shop/home/home_screen.dart';
 
 class MainScreenWithBottomNavbar extends StatefulWidget {
@@ -18,8 +20,8 @@ class _MainScreenWithBottomNavbarState extends State<MainScreenWithBottomNavbar>
   final List<Widget> _screen = [
     HomeScreen(),
     CategoryListScreen(),
-    HomeScreen(),
-    HomeScreen()
+    CartListScreen(),
+    WishListScreen()
   ];
   @override
   Widget build(BuildContext context) {

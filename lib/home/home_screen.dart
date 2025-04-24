@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                spacing: 12,
                 children: [
                   ProductCard(),
                   ProductCard(),
