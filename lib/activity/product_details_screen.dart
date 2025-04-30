@@ -4,6 +4,8 @@ import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:neuro_shop/widgets/product_increment_decrement.dart';
 import 'package:neuro_shop/widgets/product_slider.dart';
 
+import '../widgets/color_picker.dart';
+
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
 
@@ -23,16 +25,49 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ProductSlider(),
           SizedBox(height: 12),
           Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  child: Row(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [Text("Nike 320 2025 new addition")],
+                          children: [
+                            Text(
+                              "Nike 320 2025 new addition",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            Row(
+                              spacing: 4,
+                              children: [
+                                Icon(Icons.star,
+                                color: Colors.amber,
+                                size: 24,
+                                ),
+                                Text("4.2"),
+                                TextButton(onPressed: (){},
+                                    child: Text("Reviews")
+                                ),
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                  color: AppColors.themeColor,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(3),
+                                    child: Icon(
+                                      Icons.favorite_border,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                       ProductIncrementDecrement(
@@ -42,8 +77,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                     ],
                   ),
-                ),
-              ],
+                  ColorPicker(colors: ['Red', 'Green', 'Yellow', 'Black', ], onChange: (selectedColor){
+                    print(selectedColor);
+                  },),
+
+                ],
+              ),
             ),
           ),
           Container(
@@ -85,3 +124,5 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 }
+
+

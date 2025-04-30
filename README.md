@@ -21,4 +21,6 @@ flutter pub outdated
 flutter config --jdk-dir "C:\Program Files\Java\jdk-17"
 
 
+flutter pub get
+dart run flutter_launcher_icons
 ```
