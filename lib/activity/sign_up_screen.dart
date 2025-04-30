@@ -134,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: context.localization.password,
                   ),
                   validator: (String? value) {
-                    if (value?.trim().isEmpty ?? true) {
+                    if ((value?.trim().isEmpty ?? true) || value!.length < 6) {
                       return "Password required";
                     }
                     return null;
