@@ -117,6 +117,6 @@ class NetworkCaller {
   }
 
   void _logResponse(String url, Response response){
-    _logger.i("Url = $url\nStatus Code: ${response.statusCode}\nHeaders: ${response.headers}\nBody: ${response.body}")
+    _logger.i("Url = $url\nStatus Code: ${response.statusCode}\nHeaders: ${response.headers}\nBody: ${response.body}");
   }
 }

@@ -6,6 +6,7 @@ import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/app/assets_path.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
+import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 
 import '../widgets/app_bar_action_button.dart';
 import '../widgets/category_item.dart';
@@ -28,11 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: SvgPicture.asset(AssetsPath.logoNav, width: 120),
         actions: [
-          appBarActionButton(icon: Icons.person_outline, onTap: () {}),
+          appBarActionButton(icon: Icons.person_outline, onTap: () {ShowSnackBarMessage(context, "User");}),
           SizedBox(width: 8),
-          appBarActionButton(icon: Icons.person_outline, onTap: () {}),
+          appBarActionButton(icon: Icons.search, onTap: () {ShowSnackBarMessage(context, "Search");}),
           SizedBox(width: 8),
-          appBarActionButton(icon: Icons.person_outline, onTap: () {}),
+          appBarActionButton(icon: Icons.settings, onTap: () {ShowSnackBarMessage(context, "Settings");}),
           SizedBox(width: 8),
         ],
       ),
