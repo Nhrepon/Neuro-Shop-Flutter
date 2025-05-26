@@ -1,10 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/activity/verify_otp_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
+import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
+import 'package:neuro_shop/controller/sign_up_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neuro_shop/model/sign_up_model.dart';
 
 import '../../../../widgets/SnackBarMessage.dart';
 import '../../../../widgets/app_logo.dart';
@@ -27,6 +31,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final SignUpController signUpController = Get.find<SignUpController>();
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
@@ -36,6 +42,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           padding: EdgeInsets.all(16),
           child: Form(
             key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -59,8 +66,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: context.localization.email,
                   ),
                   validator: (String? value){
-                    if(value?.trim().isEmpty ?? true){
-                      return "Email required";
+                    String email = value ?? '';
+                    RegExp regExp = RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                    if(regExp.hasMatch(email) == false){
+                      return "Valid email required";
                     }
                     return null;
                   },
@@ -141,14 +150,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      ShowSnackBarMessage(context, "Sign up success");
-                    }
-                    Navigator.pushNamed(context, VerifyOtpScreen.name);
-                  },
-                  child: Text(context.localization.signUp),
+                GetBuilder<SignUpController>(
+                  builder: (controller) {
+                    return Visibility(
+                      visible: controller.signUpInProgress == false,
+                      replacement: Center(child: CircularProgressIndicator(),),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            SignUpModel signUpModel = SignUpModel(
+                                email: _emailController.text.trim(),
+                                firstName: _firstNameController.text.trim(),
+                                lastName: _lastNameController.text.trim(),
+                                phone: _phoneController.text.trim(),
+                                password: _passwordController.text,
+                                deliveryAddress: _addressController.text.trim());
+                            final result = await signUpController.signUp(signUpModel);
+                            if(result){
+                              ShowSnackBarMessage(context, "Sign up success");
+                              Navigator.pushNamed(context, MainScreenWithBottomNavbar.name);
+                            }else{
+                              ShowSnackBarMessage(context, "Sign up failed");
+                            }
+                          }
+                        },
+                        child: Text(context.localization.signUp),
+                      ),
+                    );
+                  }
                 ),
                 SizedBox(height: 16),
                 RichText(

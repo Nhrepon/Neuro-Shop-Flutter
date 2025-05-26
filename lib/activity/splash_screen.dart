@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neuro_shop/activity/sign_up_screen.dart';
 import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
 import '../widgets/app_logo.dart';
 import 'package:neuro_shop/app/app_configs.dart';
@@ -16,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _moveToNextScreen()async{
     await Future.delayed(const Duration(seconds: 2));
-    //Navigator.pushReplacementNamed(context, SignInScreen.name);
-    Navigator.pushReplacementNamed(context, MainScreenWithBottomNavbar.name);
+    Navigator.pushReplacementNamed(context, SignUpScreen.name);
+    //Navigator.pushReplacementNamed(context, MainScreenWithBottomNavbar.name);
   }
 
   @override
