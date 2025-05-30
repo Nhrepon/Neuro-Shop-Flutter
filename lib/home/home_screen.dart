@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/app/assets_path.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 
+import '../controller/auth_controller.dart';
 import '../widgets/app_bar_action_button.dart';
 import '../widgets/category_item.dart';
 import '../widgets/product_card.dart';
@@ -23,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AuthController _authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           appBarActionButton(icon: Icons.search, onTap: () {ShowSnackBarMessage(context, "Search");}),
           SizedBox(width: 8),
           appBarActionButton(icon: Icons.settings, onTap: () {ShowSnackBarMessage(context, "Settings");}),
+          SizedBox(width: 8),
+          appBarActionButton(icon: Icons.logout, onTap: () async {await _authController.clearData();Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (value)=>false);}),
           SizedBox(width: 8),
         ],
       ),

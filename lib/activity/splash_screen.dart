@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
+import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/activity/sign_up_screen.dart';
 import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
+import 'package:neuro_shop/controller/auth_controller.dart';
 import '../widgets/app_logo.dart';
 import 'package:neuro_shop/app/app_configs.dart';
 
@@ -15,10 +18,16 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+  final AuthController _authController = Get.find<AuthController>();
+
   Future<void> _moveToNextScreen()async{
     await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushReplacementNamed(context, SignUpScreen.name);
-    //Navigator.pushReplacementNamed(context, MainScreenWithBottomNavbar.name);
+    if(await _authController.isLogin()){
+      Navigator.pushReplacementNamed(context, MainScreenWithBottomNavbar.name);
+    }else{
+      Navigator.pushReplacementNamed(context, SignInScreen.name);
+    }
+
   }
 
   @override

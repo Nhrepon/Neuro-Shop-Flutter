@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/activity/verify_otp_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
-import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
 import 'package:neuro_shop/controller/sign_up_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -167,10 +166,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 deliveryAddress: _addressController.text.trim());
                             final result = await signUpController.signUp(signUpModel);
                             if(result){
-                              ShowSnackBarMessage(context, "Sign up success");
-                              Navigator.pushNamed(context, MainScreenWithBottomNavbar.name);
+                              ShowSnackBarMessage(context, signUpController.message!);
+                              Navigator.pushNamed(context, VerifyOtpScreen.name, arguments: _emailController.text.trim());
                             }else{
-                              ShowSnackBarMessage(context, "Sign up failed");
+                              ShowSnackBarMessage(context, "Failed");
                             }
                           }
                         },
@@ -207,7 +206,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _onTapSingInButton() {
-    Navigator.pushNamed(context, SignInScreen.name);
+    Navigator.popAndPushNamed(context, SignInScreen.name);
   }
 
   @override

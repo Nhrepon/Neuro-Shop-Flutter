@@ -1,17 +1,21 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/gestures.dart';
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neuro_shop/activity/sign_up_screen.dart';
+import 'package:get/get.dart';
+import 'package:neuro_shop/activity/sign_in_screen.dart';
+import 'package:neuro_shop/controller/verify_otp_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
+import 'package:neuro_shop/model/verify_otp_model.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../../app/app_colors.dart';
 import '../../../../widgets/app_logo.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
-  const VerifyOtpScreen({super.key});
-
+  const VerifyOtpScreen({super.key, required this.email});
+  final String email;
   static const String name = "/verify-otp";
 
   @override
@@ -21,6 +25,26 @@ class VerifyOtpScreen extends StatefulWidget {
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   final TextEditingController _otpController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final VerifyOtpController _verifyOtpController = Get.find<VerifyOtpController>();
+
+  late RxInt _currentTime;
+  void _startTimer(){
+    _currentTime = 30.obs;
+    Timer.periodic(Duration(seconds: 1), (timer){
+      if(_currentTime.value == 0){
+        timer.cancel();
+      }else{
+        _currentTime.value --;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _startTimer();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +69,31 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   _buildPinCodeTextField(),
                   SizedBox(height: 32),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: ()async{
                       if(_formKey.currentState!.validate()){
-                        ShowSnackBarMessage(context, "Verify success");
+                        VerifyOtpModel verifyOtpModel = VerifyOtpModel(email: widget.email, otp: _otpController.text);
+                        final bool response = await _verifyOtpController.verifyOtp(verifyOtpModel);
+                        if(response){
+                          ShowSnackBarMessage(context, _verifyOtpController.message!);
+                          Navigator.pushNamedAndRemoveUntil(context, SignInScreen.name, (predicate)=>false);
+                        }else{
+                          ShowSnackBarMessage(context, _verifyOtpController.message!);
+                        }
                       }
                       //FirebaseCrashlytics.instance.log("custom error message throsing...");
                       //throw Exception("test error");
                     },
                     child: Text(context.localization.verify),
+                  ),
+                  const SizedBox(height: 16,),
+                  Obx(() {
+                      return Column(
+                        children: [
+                          Visibility(visible:_currentTime.value == 0, child: TextButton(onPressed: (){setState(() {_startTimer();});}, child: Text("Resend otp"))),
+                          Visibility(visible:_currentTime.value != 0, child: TextButton(onPressed: (){}, child: Text("Resend otp in ${_currentTime.value}"))),
+                        ],
+                      );
+                    }
                   ),
 
                 ],
@@ -94,9 +135,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     );
   }
 
-  void _onTapSignInButton() {
-    Navigator.pushNamed(context, SignUpScreen.name);
-  }
 
   @override
   void dispose() {

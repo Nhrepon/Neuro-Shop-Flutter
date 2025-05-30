@@ -2,7 +2,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 import 'package:neuro_shop/activity/sign_up_screen.dart';
+import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
+import 'package:neuro_shop/controller/login_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 import '../../../../app/app_colors.dart';
@@ -21,6 +24,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final LoginController _loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,15 +82,28 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                   ),
                   SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      if(_formKey.currentState!.validate()){
-                        ShowSnackBarMessage(context, "Login success");
-                      }
-                      //FirebaseCrashlytics.instance.log("custom error message throsing...");
-                      //throw Exception("test error");
-                    },
-                    child: Text(context.localization.signIn),
+                  GetBuilder<LoginController>(
+                    builder: (controller) {
+                      return Visibility(
+                        visible: _loginController.progress == false,
+                        replacement: Center(child: CircularProgressIndicator(),),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if(_formKey.currentState!.validate()){
+
+                              final bool response = await _loginController.login(_emailController.text.trim(), _passwordController.text);
+                              if(response){
+                                ShowSnackBarMessage(context, "Login success");
+                                Navigator.pushNamedAndRemoveUntil(context, MainScreenWithBottomNavbar.name, (value)=>false);
+                              }else{ShowSnackBarMessage(context, "Login failed");}
+                            }
+                            //FirebaseCrashlytics.instance.log("custom error message throsing...");
+                            //throw Exception("test error");
+                          },
+                          child: Text(context.localization.signIn),
+                        ),
+                      );
+                    }
                   ),
                   SizedBox(height: 16),
                   RichText(
