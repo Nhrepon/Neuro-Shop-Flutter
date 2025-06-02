@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:neuro_shop/activity/sign_in_screen.dart';
-import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/app/assets_path.dart';
+import 'package:neuro_shop/controller/category_controller.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
+import 'package:neuro_shop/model/category_model.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 
 import '../controller/auth_controller.dart';
@@ -26,6 +26,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = Get.find<AuthController>();
+  final CategoryController _categoryController = Get.find<CategoryController>();
+
+  @override
+  void initState() {
+    _categoryController.initialLoad();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,20 +62,24 @@ class _HomeScreenState extends State<HomeScreen> {
               SectionHeader(title: context.localization.categories, onTap: () {
                 Get.find<HomeLayoutController>().moveToCategory();
               },),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CategoryItem(title: "Computer", icon: Icons.computer),
-                    CategoryItem(
-                      title: "Electronics",
-                      icon: Icons.electric_car,
+              GetBuilder<CategoryController>(
+                builder: (controller) {
+                  if(controller.initialLoading) return Center(child: CircularProgressIndicator(),);
+
+                  List<CategoryModel> list = controller.categoryList.length > 10
+                      ? controller.categoryList.sublist(0, 10)
+                      : controller.categoryList;
+
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: list.map((e){
+                          return CategoryItem(categoryModel: e);
+                        }).toList()
+                      ,
                     ),
-                    CategoryItem(title: "Electronics", icon: Icons.phone),
-                    CategoryItem(title: "Electronics", icon: Icons.motorcycle),
-                    CategoryItem(title: "Electronics", icon: Icons.laptop),
-                  ],
-                ),
+                  );
+                }
               ),
               SizedBox(height: 16),
               SectionHeader(title: context.localization.popular, onTap: () {}),

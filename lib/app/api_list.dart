@@ -3,7 +3,8 @@ class ApiList{
   static const String signUpUrl = "$_baseUrl/auth/signup";
   static const String loginUrl = "$_baseUrl/auth/login";
   static const String verifyOtpUrl = "$_baseUrl/auth/verify-otp";
+  static const String sliderUrl = "$_baseUrl/slides";
   static const String productUrl = "$_baseUrl/auth/signup";
-  static const String categoryUrl = "$_baseUrl/auth/signup";
+  static const String categoryUrl = "$_baseUrl/categories";
 
 }

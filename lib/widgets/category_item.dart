@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:neuro_shop/activity/product_list_screen.dart';
+import 'package:neuro_shop/model/category_model.dart';
 
 import '../app/app_colors.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.title, required this.icon});
+  const CategoryItem({super.key, required this.categoryModel});
 
-  final String title;
-  final IconData icon;
+  // final String title;
+  // final IconData icon;
+  
+  final CategoryModel categoryModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ProductListScreen.name, arguments: "Computer");
+        Navigator.pushNamed(context, ProductListScreen.name, arguments: categoryModel.title);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,11 +29,11 @@ class CategoryItem extends StatelessWidget {
             color: Colors.grey.shade200,
             child: Padding(
               padding: EdgeInsets.all(16),
-              child: Icon(icon, size: 60, color: AppColors.themeColor),
+              child: Image.network(categoryModel.icon, width: 48, height: 48,),
             ),
           ),
           Text(
-            title,
+            categoryModel.title,
             style: TextStyle(
               color: AppColors.themeColor,
               fontSize: 16,

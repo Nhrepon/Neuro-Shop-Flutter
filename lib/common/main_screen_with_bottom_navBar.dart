@@ -6,8 +6,10 @@ import 'package:neuro_shop/activity/wish_list_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
 import 'package:neuro_shop/activity/category_list_screen.dart';
-import 'package:neuro_shop/home/home_screen.dart';
+import 'package:neuro_shop/activity/home_screen.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
+
+import '../controller/slider_controller.dart';
 
 class MainScreenWithBottomNavbar extends StatefulWidget {
   const MainScreenWithBottomNavbar({super.key});
@@ -29,6 +31,13 @@ class _MainScreenWithBottomNavbarState
     CartListScreen(),
     WishListScreen()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Get.find<SliderController>().getSlider();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
