@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
-import 'package:neuro_shop/model/category_model.dart';
-
+import 'package:neuro_shop/model/product_model.dart';
 import '../app/api_list.dart';
 import '../core/network_caller.dart';
 
-class CategoryController extends GetxController{
+class ProductController extends GetxController{
   bool _initialLoading = true;
   bool get initialLoading => _initialLoading;
 
@@ -19,10 +18,10 @@ class CategoryController extends GetxController{
   int? _total;
   int? get totalPage => _total;
 
-  List<CategoryModel> _categoryList = [];
-  List<CategoryModel> get categoryList => _categoryList;
+  List<ProductModel> _productList = [];
+  List<ProductModel> get productList => _productList;
 
-  Future<bool> getCategoryList() async {
+  Future<bool> getProductList(String categoryId) async {
     if(_total != null && _pageNo > _total!) return true;
 
     bool success = false;
@@ -33,13 +32,13 @@ class CategoryController extends GetxController{
     update();
 
     final NetworkResponse response = await Get.find<NetworkCaller>()
-        .getRequest(url: ApiList.categoryUrl, queryParams: {"count": _perPage, "page": _pageNo});
+        .getRequest(url: ApiList.productListUrl, queryParams: {"category":categoryId,"count": _perPage, "page": _pageNo});
     if(response.isSuccess){
-      List<CategoryModel> list = [];
+      List<ProductModel> list = [];
       for(Map<String, dynamic> data in response.responseData?['data']['results']){
-        list.add(CategoryModel.fromJson(data));
+        list.add(ProductModel.fromJson(data));
       }
-      _categoryList.addAll(list);
+      _productList.addAll(list);
       _total = response.responseData?['data']['last_page'];
       _message = response.responseData?["msg"];;
       success = true;
@@ -53,10 +52,15 @@ class CategoryController extends GetxController{
     }
     return success;
   }
-  Future<bool> initialLoad(){
+
+
+
+  Future<bool> initialLoad(String categoryId){
     _pageNo = 0;
-    _categoryList = [];
+    _productList = [];
     _initialLoading = true;
-    return getCategoryList();
+    return getProductList(categoryId);
   }
+
+
 }

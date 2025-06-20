@@ -9,6 +9,7 @@ import 'package:neuro_shop/activity/category_list_screen.dart';
 import 'package:neuro_shop/activity/home_screen.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 
+import '../controller/category_controller.dart';
 import '../controller/slider_controller.dart';
 
 class MainScreenWithBottomNavbar extends StatefulWidget {
@@ -35,8 +36,13 @@ class _MainScreenWithBottomNavbarState
   @override
   void initState() {
     // TODO: implement initState
-    Get.find<SliderController>().getSlider();
+    dataLoader();
     super.initState();
+  }
+
+  dataLoader(){
+    Get.find<SliderController>().getSlider();
+    Get.find<CategoryController>().getCategoryList();
   }
 
   @override
@@ -64,7 +70,7 @@ class _MainScreenWithBottomNavbarState
                 ]);
           }
       ),
-      endDrawer: Drawer(child: ListView(
+      drawer: Drawer(child: ListView(
         children: [
           DrawerHeader(
             padding: EdgeInsets.all(0),

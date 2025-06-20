@@ -16,7 +16,7 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ProductListScreen.name, arguments: categoryModel.title);
+        Navigator.pushNamed(context, ProductListScreen.name, arguments: categoryModel);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +36,7 @@ class CategoryItem extends StatelessWidget {
             categoryModel.title,
             style: TextStyle(
               color: AppColors.themeColor,
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
           ),

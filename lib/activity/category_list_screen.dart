@@ -19,14 +19,13 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
 
   @override
   void initState() {
-    _categoryController.initialLoad();
     _scrollController.addListener(_loadMoreData);
     // TODO: implement initState
     super.initState();
   }
 
   void _loadMoreData(){
-    if(_scrollController.position.extentAfter > 300){
+    if(_scrollController.position.extentAfter > 200){
       _categoryController.getCategoryList();
     }
   }
@@ -43,37 +42,40 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
           title: Text("Categories"),
           leading: IconButton(onPressed: (){Get.find<HomeLayoutController>().moveToHome();}, icon: Icon(CupertinoIcons.back))
         ),
-        body: GetBuilder<CategoryController>(
-          builder: (controller) {
-            if(controller.initialLoading){
-              return Center(child: CircularProgressIndicator(),);
-            }
-            return Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: GridView.builder(
-                      controller: _scrollController,
-                      itemCount: controller.categoryList.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 8,
+        body: RefreshIndicator(
+          onRefresh: () { return _categoryController.getCategoryList(); },
+          child: GetBuilder<CategoryController>(
+            builder: (controller) {
+              if(controller.initialLoading){
+                return Center(child: CircularProgressIndicator(),);
+              }
+              return Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: GridView.builder(
+                        controller: _scrollController,
+                        itemCount: controller.categoryList.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 8,
+                        ),
+                        itemBuilder: (context, index) {
+                          return FittedBox(
+                            child: CategoryItem(categoryModel: controller.categoryList[index],),
+                          );
+                        },
                       ),
-                      itemBuilder: (context, index) {
-                        return FittedBox(
-                          child: CategoryItem(categoryModel: controller.categoryList[index],),
-                        );
-                      },
                     ),
-                  ),
-                  Visibility(
-                    visible: controller.progress,
-                      child: LinearProgressIndicator())
-                ],
-              ),
-            );
-          }
+                    Visibility(
+                      visible: controller.progress,
+                        child: LinearProgressIndicator())
+                  ],
+                ),
+              );
+            }
+          ),
         ),
       ),
     );

@@ -26,11 +26,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = Get.find<AuthController>();
-  final CategoryController _categoryController = Get.find<CategoryController>();
 
   @override
   void initState() {
-    _categoryController.initialLoad();
     super.initState();
   }
 
