@@ -11,6 +11,7 @@ class ProductModel {
   final List<String> sizes;
   final List<String> colors;
   final int availableQuantity;
+  final String description;
 
   ProductModel({
     required this.id,
@@ -23,12 +24,13 @@ class ProductModel {
     required this.sizes,
     required this.colors,
     required this.availableQuantity,
+    required this.description,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> jsonData){
-    List<dynamic> photos = jsonData["photos"];
-    List<dynamic> sizes = jsonData["sizes"];
-    List<dynamic> colors = jsonData["colors"];
+    List<dynamic> photos = jsonData["photos"] ?? [];
+    List<dynamic> sizes = jsonData["sizes"] ?? [];
+    List<dynamic> colors = jsonData["colors"] ?? [];
     return ProductModel(
         id: jsonData["_id"],
         title: jsonData["title"],
@@ -39,7 +41,8 @@ class ProductModel {
         photos: List<String>.from(photos),
         sizes: List<String>.from(sizes),
         colors: List<String>.from(colors),
-        availableQuantity: jsonData["quantity"]);
+        availableQuantity: jsonData["quantity"],
+        description:jsonData["description"]);
   }
 
 }

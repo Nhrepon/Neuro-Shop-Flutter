@@ -41,24 +41,33 @@ class _ProductListScreenState extends State<ProductListScreen> {
       ),
       body: GetBuilder(
         init: _productController,
-        builder: (context) {
-          return Padding(
-            padding: EdgeInsets.all(16),
-            child: GridView.builder(
-              controller: _scrollController,
-              itemCount: _productController.productList.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 8
+        builder: (controller) {
+          if(controller.initialLoading){
+            return Center(child: const CircularProgressIndicator());
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: GridView.builder(
+                  controller: _scrollController,
+                  itemCount: controller.productList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 8
+                  ),
+                  itemBuilder: (context, index) {
+                    return FittedBox(
+                      fit: BoxFit.cover,
+                        child: ProductCard(productModel: controller.productList[index],)
+                    );
+                  },
+                ),
               ),
-              itemBuilder: (context, index) {
-                return FittedBox(
-                  fit: BoxFit.cover,
-                    child: ProductCard()
-                );
-              },
-            ),
+              Visibility(
+                  visible: controller.progress,
+                  child: LinearProgressIndicator())
+            ],
           );
         }
       ),

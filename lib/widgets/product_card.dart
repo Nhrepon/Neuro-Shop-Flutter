@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:neuro_shop/activity/product_details_screen.dart';
+import 'package:neuro_shop/model/product_model.dart';
 
 import '../app/app_colors.dart';
 import '../app/assets_path.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
-    super.key,
+    super.key, required this.productModel,
   });
+
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, ProductDetailsScreen.name);
+        Navigator.pushNamed(context, ProductDetailsScreen.name, arguments: productModel.id);
       },
       child: Card(
         //margin: EdgeInsets.all(4),
@@ -31,18 +34,20 @@ class ProductCard extends StatelessWidget {
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
                   ),
-                  image: DecorationImage(
-                    image: AssetImage(AssetsPath.shoe),
-                    fit: BoxFit.scaleDown,
-                  ),
+                  image: productModel.photos.isNotEmpty ? DecorationImage(
+                    image: NetworkImage(productModel.photos.first),
+                    fit: BoxFit.cover,
+                  ): null,
                 ),
+                child: productModel.photos.isEmpty ? Icon(Icons.error):null,
               ),
               Padding(
                 padding: EdgeInsets.all(8),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Nike NK-76 New collection",
+                      productModel.title,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         overflow: TextOverflow.ellipsis,
@@ -53,13 +58,13 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "100৳",
+                          "${productModel.currentPrice}৳",
                           style: TextStyle(
                             color: AppColors.themeColor,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Wrap(children: [Icon(Icons.star, size: 18, color: Colors.orange), Text("3.3")]),
+                        Wrap(children: [Icon(Icons.star, size: 18, color: Colors.orange), Text("${productModel.rating}")]),
                         Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(2),

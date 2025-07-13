@@ -8,6 +8,8 @@ import 'package:neuro_shop/controller/slider_controller.dart';
 import 'package:neuro_shop/controller/verify_otp_controller.dart';
 import 'package:neuro_shop/core/network_caller.dart';
 
+import '../controller/product_details_controller.dart';
+
 class ControllerBinder extends Bindings{
   @override
   void dependencies() {
@@ -20,5 +22,7 @@ class ControllerBinder extends Bindings{
     Get.put(LoginController());
     Get.put(SliderController());
     Get.put(CategoryController());
+    //Get.put(ProductDetailsController());
+
   }
 }

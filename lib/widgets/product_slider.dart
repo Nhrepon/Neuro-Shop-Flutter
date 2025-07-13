@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 
 class ProductSlider extends StatefulWidget {
-  const ProductSlider({super.key});
+  const ProductSlider({super.key, required this.imageList});
+  final List<String> imageList;
 
   @override
   State<ProductSlider> createState() => _ProductSliderState();
@@ -28,16 +29,17 @@ class _ProductSliderState extends State<ProductSlider> {
                 setState(() {});
               }
           ),
-          items: [1,2,3,4,5].map((i) {
+          items: widget.imageList.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.grey.shade200,
-                    child: Center(
-                      child: Text('Image $i', style: TextStyle(fontSize: 16.0,),),
-                    )
-                );
+                return Image.network(image,fit: BoxFit.cover,);
+                // return Container(
+                //     width: MediaQuery.of(context).size.width,
+                //     color: Colors.grey.shade200,
+                //     child: Center(
+                //       child: Text('Image $i', style: TextStyle(fontSize: 16.0,),),
+                //     )
+                // );
               },
             );
           }).toList(),
@@ -49,7 +51,7 @@ class _ProductSliderState extends State<ProductSlider> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for(int i = 0; i < 5; i++)
+              for(int i = 0; i < widget.imageList.length; i++)
                 Container(
                   height: 20,
                   width: 20,

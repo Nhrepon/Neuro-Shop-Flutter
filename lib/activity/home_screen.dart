@@ -99,11 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 spacing: 12,
                 children: [
-                  ProductCard(),
-                  ProductCard(),
-                  ProductCard(),
-                  ProductCard(),
-                  ProductCard(),
+                  Text("Product"),
+                  Text("Product"),
+                  Text("Product"),
+                  Text("Product"),
+                  Text("Product"),
+                  Text("Product"),
+                  Text("Product"),
+
                 ],
               ),
             );

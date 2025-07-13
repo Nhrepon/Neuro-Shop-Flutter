@@ -34,7 +34,7 @@ class _WishListScreenState extends State<WishListScreen> {
           itemBuilder: (context, index) {
             return FittedBox(
                 fit: BoxFit.cover,
-                child: ProductCard()
+                child: Text("product")
             );
           },
         ),

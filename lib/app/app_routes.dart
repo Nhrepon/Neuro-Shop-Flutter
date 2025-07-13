@@ -29,7 +29,8 @@ class AppRoutes{
       final category = settings.arguments as CategoryModel;
       route = ProductListScreen(category: category,);
     }else if(settings.name == ProductDetailsScreen.name){
-      route = ProductDetailsScreen();
+      String productId = settings.arguments as String;
+      route = ProductDetailsScreen(productId: productId,);
     }else if(settings.name == WishListScreen.name){
       route = const WishListScreen();
     }else if(settings.name == CartListScreen.name){
