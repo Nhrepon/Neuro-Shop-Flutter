@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:neuro_shop/controller/cart_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
+import 'package:neuro_shop/model/cart_item_model.dart';
 
 import '../widgets/product_card.dart';
 
@@ -21,22 +24,40 @@ class _CartListScreenState extends State<CartListScreen> {
           icon: Icon(Icons.arrow_back),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: GridView.builder(
-          itemCount: 6,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 8
-          ),
-          itemBuilder: (context, index) {
-            return FittedBox(
-                fit: BoxFit.cover,
-                child: Text("Product")
-            );
-          },
-        ),
+      body: GetBuilder<CartController>(
+        builder: (controller) {
+          List cartList = controller.cartList;
+          if(controller.progress){
+            return Center(child: CircularProgressIndicator(),);
+          }
+          return Padding(
+            padding: EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: cartList.length,
+              itemBuilder: (context, index) {
+                CartItemModel cartItem = cartList[index];
+                return Card(
+                  child: Row(children: [
+                  Image.network("",width: 100, height: 100, errorBuilder: (_, __, ___){
+                    return Icon(Icons.error_outline);
+                  },),
+                  Expanded(
+                    child: Column(children: [
+                      Text(cartItem.productModel.title),
+                      Row(children: [
+                        Text(cartItem.color),
+                        Text(cartItem.size),
+                      ],)
+                    ],),
+                  ),
+                  Column(children: [
+
+                  ],)
+                ],),);
+              },
+            ),
+          );
+        }
       ),
     );
   }

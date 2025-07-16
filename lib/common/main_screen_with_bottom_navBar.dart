@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:neuro_shop/activity/cart_list_screen.dart';
+import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/activity/wish_list_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
@@ -58,7 +59,13 @@ class _MainScreenWithBottomNavbarState
           builder: (controller) {
             return NavigationBar(
                 selectedIndex: controller.selectedIndex,
-                onDestinationSelected: controller.changeIndex,
+                onDestinationSelected: (int index){
+                  if(controller.shouldNavigate(index)){
+                    controller.changeIndex(index);
+                  }else{
+                    Get.to(()=>{SignInScreen});
+                  }
+                },
                 destinations: [
                   NavigationDestination(icon: Icon(Icons.home), label: "Home"),
                   NavigationDestination(

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
+import 'package:get/get.dart' as getx;
+import 'package:neuro_shop/controller/auth_controller.dart';
 
 class NetworkResponse {
   final int statusCode;
@@ -19,9 +21,11 @@ class NetworkResponse {
 }
 
 class NetworkCaller {
+
   final Logger _logger = Logger();
 
   Future<NetworkResponse> getRequest({required String url, Map<String, dynamic>? queryParams}) async {
+    await getx.Get.find<AuthController>().getUserData();
     try {
       if(queryParams != null){
         url += '?';
@@ -30,7 +34,7 @@ class NetworkCaller {
         }
       }
       Uri uri = Uri.parse(url);
-      Map<String, String> headers = {'token': ''};
+      Map<String, String> headers = {'token': getx.Get.find<AuthController>().token ?? ""};
       _logRequest(url, headers);
       Response response = await get(uri, headers: headers);
       _logResponse(url, response);
@@ -64,13 +68,14 @@ class NetworkCaller {
   }
 
   Future<NetworkResponse> postRequest({required String url, Map<String, dynamic>? body,}) async {
+    await getx.Get.find<AuthController>().getUserData();
     try {
       Uri uri = Uri.parse(url);
       debugPrint('URL => $url');
       debugPrint('BODY => $body');
       Response response = await post(
         uri,
-        headers: {'content-type': 'application/json', 'token': ''},
+        headers: {'content-type': 'application/json', 'token': getx.Get.find<AuthController>().token ?? ""},
         body: jsonEncode(body),
       );
       debugPrint('Response Code => ${response.statusCode}');

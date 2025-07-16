@@ -9,7 +9,7 @@ class ProductIncrementDecrement extends StatefulWidget {
 }
 
 class _ProductIncrementDecrementState extends State<ProductIncrementDecrement> {
-  int count = 0;
+  int count = 1;
   @override
   Widget build(BuildContext context) {
     return Wrap(

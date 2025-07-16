@@ -8,5 +8,7 @@ class ApiList{
   static const String categoryUrl = "$_baseUrl/categories";
   static const String productListUrl = "$_baseUrl/products";
   static String productDetailsUrl(String productId) => "$_baseUrl/products/id/$productId";
+  static const String addToCartUrl = "$_baseUrl/cart";
+  static const String cartListUrl = "$_baseUrl/cart";
 
 }

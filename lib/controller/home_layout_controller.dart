@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:neuro_shop/controller/auth_controller.dart';
 
 class HomeLayoutController extends GetxController{
   int _selectedIndex = 0;
@@ -6,6 +7,13 @@ class HomeLayoutController extends GetxController{
   void changeIndex(int index){
     _selectedIndex = index;
     update();
+  }
+
+  bool shouldNavigate(int index){
+    if(index == 2 || index == 3){
+      return Get.find<AuthController>().isValidUser();
+    }
+    return true;
   }
 
   void moveToCategory(){

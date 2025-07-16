@@ -3,7 +3,7 @@ import 'brand_model.dart';
 class ProductModel {
   final String id;
   final String title;
-  final BrandModel brand;
+  final BrandModel? brand;
   final int regularPrice;
   final int currentPrice;
   final double rating;

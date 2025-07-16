@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neuro_shop/activity/cart_list_screen.dart';
+import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
+import 'package:neuro_shop/controller/add_to_cart_controller.dart';
+import 'package:neuro_shop/controller/auth_controller.dart';
 import 'package:neuro_shop/controller/product_details_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
+import 'package:neuro_shop/widgets/SnackBarMessage.dart';
 import 'package:neuro_shop/widgets/product_increment_decrement.dart';
 import 'package:neuro_shop/widgets/product_slider.dart';
 import 'package:neuro_shop/widgets/size_picker.dart';
@@ -22,7 +27,10 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   final ProductDetailsController _productDetailsController = ProductDetailsController();
+  final AddToCartController _addToCartController = AddToCartController();
 
+  String? _selectedColor;
+  String? _selectedSize;
   @override
   void initState() {
     // TODO: implement initState
@@ -103,10 +111,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ],
                           ),
                           ColorPicker(colors: controller.product.colors, onChange: (selectedColor){
-                            print(selectedColor);
+                            _selectedColor = selectedColor;
                           },),
                           SizePicker(sizes: controller.product.sizes, onChange: (selectedSize){
-                            print(selectedSize);
+                            _selectedSize = selectedSize;
                           }),
                           Text("Descriptions",
                             style: TextStyle(
@@ -149,9 +157,38 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     SizedBox(
                       width: 140,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text("Add to cart"),
+                      child: GetBuilder(
+                        init: _addToCartController,
+                        builder: (cont) {
+                          return Visibility(
+                            visible: cont.inProgress == false,
+                            replacement: Center(child: CircularProgressIndicator(),),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if(controller.product.colors.isNotEmpty && _selectedColor == null){
+                                  ShowSnackBarMessage(context, "Please, Select product color.");
+                                  return;
+                                }else if(controller.product.sizes.isNotEmpty && _selectedSize == null){
+                                  ShowSnackBarMessage(context, "Please, Select product size.");
+                                  return;
+                                }else{
+                                  if(Get.find<AuthController>().isValidUser() == false){
+                                    Get.to(()=>SignInScreen());
+                                    return;
+                                  }
+                                  final bool response = await _addToCartController.AddToCart(controller.product.id);
+                                  if(response){
+                                    ShowSnackBarMessage(context, "Add to cart success.");
+                                    Get.to(()=>{CartListScreen});
+                                  }else{
+                                    ShowSnackBarMessage(context, "${_addToCartController.errorMessage}");
+                                  }
+                                }
+                              },
+                              child: Text("Add to cart"),
+                            ),
+                          );
+                        }
                       ),
                     ),
                   ],
