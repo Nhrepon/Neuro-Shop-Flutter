@@ -1,19 +1,25 @@
-import 'package:neuro_shop/model/product_model.dart';
-
 class CartItemModel {
-  final ProductModel productModel;
-  final String quantity;
-  final String color;
-  final String size;
+  final String title;
+  //final String? photo;
+  final int quantity;
+  final String? color;
+  final String? size;
 
-  CartItemModel(
-      {required this.productModel, required this.quantity, required this.color, required this.size});
+  CartItemModel({
+    required this.title,
+    //required this.photo,
+    required this.quantity,
+    required this.color,
+    required this.size,
+  });
 
-  factory CartItemModel.fromJson(Map<String, dynamic> jsonData){
+  factory CartItemModel.fromJson(Map<String, dynamic> jsonData) {
     return CartItemModel(
-        productModel: jsonData["product"],
-        quantity: jsonData["quantity"],
-        color: jsonData["color"],
-        size: jsonData["size"]);
+      title: jsonData["product"]["title"],
+      //photo: jsonData["product"]["photos"][0] ?? "",
+      quantity: jsonData["quantity"],
+      color: jsonData["color"],
+      size: jsonData["size"],
+    );
   }
 }

@@ -8,11 +8,11 @@ class AddToCartController extends GetxController{
   bool get inProgress => _inProgress;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> AddToCart(String productId)async{
+  Future<bool> AddToCart(String productId, String color, String size)async{
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response = await Get.find<NetworkCaller>().postRequest(url: ApiList.addToCartUrl, body: {"product":productId});
+    final NetworkResponse response = await Get.find<NetworkCaller>().postRequest(url: ApiList.addToCartUrl, body: {"product":productId, "size":size, "color":color});
     if(response.isSuccess){
       isSuccess = true;
       _errorMessage = null;

@@ -14,6 +14,15 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+  final CartController _cartController = Get.find<CartController>();
+  @override
+  void initState() {
+    _cartController.getCartList();
+    super.initState();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,33 +34,38 @@ class _CartListScreenState extends State<CartListScreen> {
         ),
       ),
       body: GetBuilder<CartController>(
+        init: _cartController,
         builder: (controller) {
-          List cartList = controller.cartList;
           if(controller.progress){
             return Center(child: CircularProgressIndicator(),);
           }
           return Padding(
             padding: EdgeInsets.all(16),
             child: ListView.builder(
-              itemCount: cartList.length,
+              itemCount: controller.cartList.length,
               itemBuilder: (context, index) {
-                CartItemModel cartItem = cartList[index];
+                CartItemModel cartItem = controller.cartList[index];
                 return Card(
-                  child: Row(children: [
+                  child: Row(
+                    spacing: 8,
+                    children: [
                   Image.network("",width: 100, height: 100, errorBuilder: (_, __, ___){
                     return Icon(Icons.error_outline);
                   },),
                   Expanded(
-                    child: Column(children: [
-                      Text(cartItem.productModel.title),
-                      Row(children: [
-                        Text(cartItem.color),
-                        Text(cartItem.size),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      Text(cartItem.title ?? ""),
+                      Row(spacing:8,
+                        children: [
+                        Text("Color: ${cartItem.color ?? ""}"),
+                        Text("Size: ${cartItem.size}"),
                       ],)
                     ],),
                   ),
                   Column(children: [
-
+                    IconButton(onPressed: (){}, icon: Icon(Icons.delete))
                   ],)
                 ],),);
               },

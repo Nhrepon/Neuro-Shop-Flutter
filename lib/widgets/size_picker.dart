@@ -32,6 +32,7 @@ class _SizePickerState extends State<SizePicker> {
                 onTap: () {
                   selectedSize = size;
                   setState(() {});
+                  widget.onChange(selectedSize!);
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8),

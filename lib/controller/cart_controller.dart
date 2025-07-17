@@ -20,11 +20,12 @@ class CartController extends GetxController{
     final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(url: ApiList.cartListUrl);
     if(response.isSuccess){
       List<CartItemModel> list = [];
-      for(Map<String, dynamic> json in response.responseData!["data"]["result"]){
+      for(Map<String, dynamic> json in response.responseData!["data"]["results"]){
         list.add(CartItemModel.fromJson(json));
       }
       _cartList = list;
       isSuccess = true;
+      print("\n\nCart List: $_cartList");
 
     }else{
       _errorMessage = response.errorMessage;

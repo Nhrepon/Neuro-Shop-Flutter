@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:neuro_shop/activity/cart_list_screen.dart';
 import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
+import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
 import 'package:neuro_shop/controller/add_to_cart_controller.dart';
 import 'package:neuro_shop/controller/auth_controller.dart';
 import 'package:neuro_shop/controller/product_details_controller.dart';
@@ -112,6 +113,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           ColorPicker(colors: controller.product.colors, onChange: (selectedColor){
                             _selectedColor = selectedColor;
+                            print(selectedColor);
                           },),
                           SizePicker(sizes: controller.product.sizes, onChange: (selectedSize){
                             _selectedSize = selectedSize;
@@ -176,10 +178,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     Get.to(()=>SignInScreen());
                                     return;
                                   }
-                                  final bool response = await _addToCartController.AddToCart(controller.product.id);
+                                  final bool response = await _addToCartController.AddToCart(controller.product.id, _selectedColor!, _selectedSize!);
                                   if(response){
                                     ShowSnackBarMessage(context, "Add to cart success.");
-                                    Get.to(()=>{CartListScreen});
+                                    Get.to(()=>{MainScreenWithBottomNavbar});
                                   }else{
                                     ShowSnackBarMessage(context, "${_addToCartController.errorMessage}");
                                   }
