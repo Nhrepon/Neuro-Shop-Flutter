@@ -25,7 +25,7 @@ class _ProductIncrementDecrementState extends State<ProductIncrementDecrement> {
             }
           },
           child: Container(
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(2),
             decoration: BoxDecoration(
               color: AppColors.themeColor,
               borderRadius: BorderRadius.circular(4)
@@ -43,7 +43,7 @@ class _ProductIncrementDecrementState extends State<ProductIncrementDecrement> {
             }
           },
           child: Container(
-            padding: EdgeInsets.all(4),
+            padding: EdgeInsets.all(2),
             decoration: BoxDecoration(
                 color: AppColors.themeColor,
                 borderRadius: BorderRadius.circular(4)

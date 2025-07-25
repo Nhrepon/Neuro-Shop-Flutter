@@ -10,5 +10,6 @@ class ApiList{
   static String productDetailsUrl(String productId) => "$_baseUrl/products/id/$productId";
   static const String addToCartUrl = "$_baseUrl/cart";
   static const String cartListUrl = "$_baseUrl/cart";
+  static String removeCartUrl(String id) => "$_baseUrl/cart/$id";
 
 }

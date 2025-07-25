@@ -1,11 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:neuro_shop/activity/cart_list_screen.dart';
 import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/app/app_colors.dart';
 import 'package:neuro_shop/common/main_screen_with_bottom_navBar.dart';
 import 'package:neuro_shop/controller/add_to_cart_controller.dart';
 import 'package:neuro_shop/controller/auth_controller.dart';
+import 'package:neuro_shop/controller/home_layout_controller.dart';
 import 'package:neuro_shop/controller/product_details_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
@@ -32,9 +34,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   String? _selectedColor;
   String? _selectedSize;
+  int? _selectedQuantity;
   @override
   void initState() {
-    // TODO: implement initState
     _productDetailsController.getProductDetails(widget.productId);
     super.initState();
   }
@@ -66,6 +68,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         children: [
                           Row(
                             children: [
+                              //IntrinsicHeight(),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,14 +109,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               ProductIncrementDecrement(
                                 onChange: (int value) {
-                                  print(value);
+                                  _selectedQuantity = value;
+                                  debugPrint("$value");
                                 },
                               ),
                             ],
                           ),
                           ColorPicker(colors: controller.product.colors, onChange: (selectedColor){
                             _selectedColor = selectedColor;
-                            print(selectedColor);
+                            debugPrint(selectedColor);
                           },),
                           SizePicker(sizes: controller.product.sizes, onChange: (selectedSize){
                             _selectedSize = selectedSize;
@@ -149,7 +153,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       children: [
                         Text("Price: "),
                         Text(
-                          "\$1000",
+                          "\$${controller.product.currentPrice}",
                           style: TextStyle(
                             color: AppColors.themeColor,
                             fontWeight: FontWeight.w600,
@@ -178,12 +182,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     Get.to(()=>SignInScreen());
                                     return;
                                   }
-                                  final bool response = await _addToCartController.AddToCart(controller.product.id, _selectedColor!, _selectedSize!);
+                                  final bool response = await _addToCartController.AddToCart(
+                                      controller.product.id,
+                                      _selectedColor ?? "",
+                                      _selectedSize ?? "",
+                                      _selectedQuantity ?? 1
+                                  );
                                   if(response){
-                                    ShowSnackBarMessage(context, "Add to cart success.");
-                                    Get.to(()=>{MainScreenWithBottomNavbar});
+                                    Get.snackbar(controller.product.title, "Add to cart success.");
+                                    Get.to(() => MainScreenWithBottomNavbar());
+                                    Get.find<HomeLayoutController>().changeIndex(2);
                                   }else{
-                                    ShowSnackBarMessage(context, "${_addToCartController.errorMessage}");
+                                    Get.snackbar("Error occurred ", "${_addToCartController.errorMessage}");
                                   }
                                 }
                               },

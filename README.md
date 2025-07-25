@@ -21,6 +21,11 @@ flutter pub outdated
 flutter config --jdk-dir "C:\Program Files\Java\jdk-17"
 
 
+
+// Generate android logo
 flutter pub get
 dart run flutter_launcher_icons
+
+
+
 ```

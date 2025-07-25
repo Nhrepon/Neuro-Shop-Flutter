@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neuro_shop/activity/cart_list_screen.dart';
+import 'package:neuro_shop/activity/payment_screen.dart';
 import 'package:neuro_shop/activity/product_details_screen.dart';
 import 'package:neuro_shop/activity/product_list_screen.dart';
 import 'package:neuro_shop/activity/wish_list_screen.dart';
@@ -35,11 +36,14 @@ class AppRoutes{
       route = const WishListScreen();
     }else if(settings.name == CartListScreen.name){
       route = const CartListScreen();
+    }else if (settings.name == PaymentScreen.name) {
+      double productId = settings.arguments as double;
+      route = PaymentScreen(paymentAmount: productId);
     }
 
 
 
-    return MaterialPageRoute(builder: (context){
+      return MaterialPageRoute(builder: (context){
       return route;
     });
   }
