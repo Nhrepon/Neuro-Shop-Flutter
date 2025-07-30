@@ -1,5 +1,9 @@
+import 'dart:convert'; // For utf8
+import 'dart:typed_data'; // For Uint8List
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key, required this.paymentAmount});
@@ -13,71 +17,28 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  late final WebViewController _webViewController;
+  late InAppWebViewController webViewController;
+  //WebUri initUrl = 'https://sandbox.sslcommerz.com/gwprocess/v4/api.php' as WebUri;
 
-  // on payment success
-  void _placeOrder() {}
-
-  // on payment failure
-  void _showFailureDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          title: const Text('Payment failed'),
-          content: const Column(
-            children: [Text('Your payment has been failed! Please try again.')],
-          ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-              child: const Text('Okay'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onHttpError: (HttpResponseError error) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            print(request.url);
-            // on success/failed, we will redirect to the cart screen
-            if (request.url.startsWith('success-url')) {
-              _placeOrder();
-            } else if (request.url.startsWith('failed-url')) {
-              _showFailureDialog();
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse('https://sandbox.sslcommerz.com?total_amount=${widget.paymentAmount}'));
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment'),
+      appBar: AppBar(title: Text("Flutter WebView POST Example")),
+      body: InAppWebView(
+        initialUrlRequest: URLRequest(
+          url: WebUri("https://sandbox.sslcommerz.com/gwprocess/v4/api.php"), // Replace with your URL
+          method: 'POST',
+          body: Uint8List.fromList(
+        utf8.encode("store_id=teamr600c004f8da4d&store_passwd=teamr600c004f8da4d@ssl&total_amount=${widget.paymentAmount}&currency=BDT&tran_id=1122"), // Replace with your POST data
       ),
-      body: WebViewWidget(controller: _webViewController),
+    ),
+    onWebViewCreated: (controller) {
+          webViewController = controller;
+        },
+      ),
     );
   }
 }
+
+

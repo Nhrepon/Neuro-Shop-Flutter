@@ -37,8 +37,8 @@ class AppRoutes{
     }else if(settings.name == CartListScreen.name){
       route = const CartListScreen();
     }else if (settings.name == PaymentScreen.name) {
-      double productId = settings.arguments as double;
-      route = PaymentScreen(paymentAmount: productId);
+      double totalAmount = settings.arguments as double;
+      route = PaymentScreen(paymentAmount: totalAmount);
     }
 
 

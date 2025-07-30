@@ -84,8 +84,8 @@ class _CartListScreenState extends State<CartListScreen> {
                       child: ElevatedButton(
                         onPressed: () async {
                           Get.snackbar("title", "Checkout");
-                          SslcommerzePayment(controller.totalPrice.toDouble());
-                          //Navigator.pushNamed(context, PaymentScreen.name, arguments: controller.totalPrice.toDouble());
+                          // SslcommerzePayment(controller.totalPrice.toDouble());
+                          Navigator.pushNamed(context, PaymentScreen.name, arguments: controller.totalPrice.toDouble());
                         },
                         child: Text("Checkout"),
                       ),

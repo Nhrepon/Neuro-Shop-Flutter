@@ -51,7 +51,7 @@ class _NeuroShopState extends State<NeuroShop> {
         Locale('en'), // English
         Locale('bn'), // Bangla
       ],      
-      locale: const Locale('en'),
+      locale: const Locale('bn'),
       debugShowCheckedModeBanner: false,
       initialBinding: ControllerBinder(),
     );
