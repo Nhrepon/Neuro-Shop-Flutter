@@ -5,6 +5,7 @@ import 'package:neuro_shop/activity/sign_in_screen.dart';
 import 'package:neuro_shop/app/assets_path.dart';
 import 'package:neuro_shop/controller/category_controller.dart';
 import 'package:neuro_shop/controller/home_layout_controller.dart';
+import 'package:neuro_shop/controller/product_controller.dart';
 import 'package:neuro_shop/core/extensions/localization_extension.dart';
 import 'package:neuro_shop/model/category_model.dart';
 import 'package:neuro_shop/widgets/SnackBarMessage.dart';
@@ -26,6 +27,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = Get.find<AuthController>();
+
+  final ProductController _productController = Get.find<ProductController>();
 
   @override
   void initState() {
@@ -99,13 +102,69 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 spacing: 12,
                 children: [
-                  Text("Product"),
-                  Text("Product"),
-                  Text("Product"),
-                  Text("Product"),
-                  Text("Product"),
-                  Text("Product"),
-                  Text("Product"),
+                  Container(
+                      width:100,
+                      height:100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.green.shade400,
+                      ),
+                      child: Center(child: Text("Product")),
+                  ),
+                  Container(
+                    width:100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.green.shade400,
+                    ),
+                    child: Center(child: Text("Product")),
+                  ),
+                  Container(
+                    width:100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.green.shade400,
+                    ),
+                    child: Center(child: Text("Product")),
+                  ),
+                  Container(
+                    width:100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.green.shade400,
+                    ),
+                    child: Center(child: Text("Product")),
+                  ),
+                  Container(
+                    width:100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.green.shade400,
+                    ),
+                    child: Center(child: Text("Product")),
+                  ),
+                  Container(
+                    width:100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.green.shade400,
+                    ),
+                    child: Center(child: Text("Product")),
+                  ),
+                  Container(
+                    width:100,
+                    height:100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.green.shade400,
+                    ),
+                    child: Center(child: Text("Product")),
+                  ),
 
                 ],
               ),
